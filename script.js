@@ -88,47 +88,61 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// To add all characters in one array
-let allChar = [];
-for (var i =0; i < specialCharacters.length; i++) {
-  allChar.push(specialCharacters[i]);  
-}
-for (var i =0; i < numericCharacters.length; i++) {
-  allChar.push(numericCharacters[i]);  
-}
-for (var i =0; i < upperCasedCharacters.length; i++) {
-  allChar.push(upperCasedCharacters[i]);  
-}
-for (var i =0; i < lowerCasedCharacters.length; i++) {
-  allChar.push(lowerCasedCharacters[i]);  
-}
-
-var passLength = prompt('Please choose a number from 10 to 64');
 
 // Function to prompt user for password options
+var passLength = prompt('Please select a number between 10 and 64');
+var passNum = prompt('Would you like to include numbers? Yes or No');
+var passUppercase = prompt('Would you like to include uppercases? Yes or No');
+var passLowercase = prompt('Would you like to include lowercases? Yes or No');
+var passSpecial = prompt('Would you like to include special characters? Yes or No');
+
+
 function getPasswordOptions() {
-  var passNum = prompt('Would you like to include numbers? Yes/No');
-  var passUppercases = prompt('Would you like to include uppercases? Yes/No');
-  var passLowercases = prompt('Would you like to include lowercases? Yes/No');
-  var passSpecial = prompt('Would you like to include special characters? Yes/No');
+  if (passNum === true) {
+    getRandom(numericCharacters);
+
+  }
+  if (passSpecial === true) {
+    getRandom(specialCharacters);
+
+  }
+  if (passUppercase === true) {
+    getRandom(upperCasedCharacters);
+
+  }
+  if (passLowercase === true) {
+    getRandom(lowerCasedCharacters);
+
+  }
 
 }
-getPasswordOptions();
-
 
 // Function for getting a random element from an array
-function getRandom(allChar) {
-  return allChar[Math.floor(Math.random() * allChar.length)];
+function getRandom(numericCharacters) {
+  return numericCharacters[Math.floor(Math.random() * numericCharacters.length)];
+
+}
+function getRandom(specialCharacters) {
+  return specialCharacters[Math.floor(Math.random() * specialCharacters.length)];
+
+}
+function getRandom(upperCasedCharacters) {
+  return upperCasedCharacters[Math.floor(Math.random() * upperCasedCharacters.length)];
+
+}
+function getRandom(lowerCasedCharacters) {
+  return lowerCasedCharacters[Math.floor(Math.random() * lowerCasedCharacters.length)];
 
 }
 
 // Function to generate password with user input
 function generatePassword() {
+  let password = '';
   for (var i=0; i < passLength; i++) {
-    getRandom();
+    password += getRandom(numericCharacters, specialCharacters, lowerCasedCharacters, upperCasedCharacters);
   }
   
-
+  return password;
 }
 
 // Get references to the #generate element
@@ -140,7 +154,9 @@ function writePassword() {
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
+  
 }
+writePassword();
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
