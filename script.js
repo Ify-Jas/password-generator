@@ -91,30 +91,41 @@ var upperCasedCharacters = [
 
 // Function to prompt user for password options
 var passLength = prompt('Please select a number between 10 and 64');
-var passNum = prompt('Would you like to include numbers? Yes or No');
-var passUppercase = prompt('Would you like to include uppercases? Yes or No');
-var passLowercase = prompt('Would you like to include lowercases? Yes or No');
-var passSpecial = prompt('Would you like to include special characters? Yes or No');
+var passNum = confirm('Would you like to include numbers?');
+var passUppercase = confirm('Would you like to include uppercases?');
+var passLowercase = confirm('Would you like to include lowercases?');
+var passSpecial = confirm('Would you like to include special characters?');
 
 
 function getPasswordOptions() {
-  if (passNum === true) {
-    getRandom(numericCharacters);
-
-  }
-  if (passSpecial === true) {
-    getRandom(specialCharacters);
-
-  }
-  if (passUppercase === true) {
-    getRandom(upperCasedCharacters);
-
-  }
-  if (passLowercase === true) {
+  if (passNum && passLowercase && passSpecial && passUppercase) {
+    getRandom(numericCharacters, specialCharacters, upperCasedCharacters, lowerCasedCharacters);
+  } else if (passNum && passLowercase) {
+    getRandom(numericCharacters, lowerCasedCharacters);
+  } else if (passNum && passLowercase && passUppercase) {
+    getRandom(numericCharacters, lowerCasedCharacters, upperCasedCharacters);
+  } else if ( passLowercase){
     getRandom(lowerCasedCharacters);
-
+  } else if ( passUppercase){
+    getRandom(upperCasedCharacters);
+  } else if (passNum){
+    getRandom(numericCharacters);
+  } else if ( passSpecial){
+    getRandom(specialCharacters);
+  } else if (passNum && passUppercase) {
+    getRandom(numericCharacters, upperCasedCharacters);
+  } else if (passNum && passSpecial) {
+    getRandom(numericCharacters, specialCharacters);
+  } else if (passSpecial && passUppercase) {
+    getRandom(specialCharacters, upperCasedCharacters);
+  } else if (passSpecial && passLowercase) {
+    getRandom(specialCharacters, lowerCasedCharacters);
+  } else if (passLowercase && passUppercase) {
+    getRandom(lowerCasedCharacters, upperCasedCharacters);
+  } else if (!passNum && !passLowercase && !passSpecial && !passUppercase ) {
+    alert('You must select one option');
   }
-
+  
 }
 
 // Function for getting a random element from an array
@@ -144,6 +155,7 @@ function generatePassword() {
   
   return password;
 }
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
