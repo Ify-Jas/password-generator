@@ -114,52 +114,41 @@ function getRandom(lowerCasedCharacters) {
 
 }
 
-// Function to prompt user for password options
-function getPasswordOptions() {
-  if (passNum && passLowercase && passSpecial && passUppercase) {
-    getRandom(numericCharacters, specialCharacters, upperCasedCharacters, lowerCasedCharacters);
-  } else if (passNum && passLowercase) {
-    getRandom(numericCharacters, lowerCasedCharacters);
-  } else if (passNum && passLowercase && passUppercase) {
-    getRandom(numericCharacters, lowerCasedCharacters, upperCasedCharacters);
-  } else if ( passLowercase){
-    getRandom(lowerCasedCharacters);
-  } else if ( passUppercase){
-    getRandom(upperCasedCharacters);
-  } else if (passNum){
-    getRandom(numericCharacters);
-  } else if ( passSpecial){
-    getRandom(specialCharacters);
-  } else if (passNum && passUppercase) {
-    getRandom(numericCharacters, upperCasedCharacters);
-  } else if (passNum && passSpecial) {
-    getRandom(numericCharacters, specialCharacters);
-  } else if (passSpecial && passUppercase) {
-    getRandom(specialCharacters, upperCasedCharacters);
-  } else if (passSpecial && passLowercase) {
-    getRandom(specialCharacters, lowerCasedCharacters);
-  } else if (passLowercase && passUppercase) {
-    getRandom(lowerCasedCharacters, upperCasedCharacters);
-  } else if (!passNum && !passLowercase && !passSpecial && !passUppercase ) {
-    alert('You must select one option');
-  }
-  
-}
-
-getPasswordOptions();
-
 
 // Function to generate password with user input
 function generatePassword() {
+  let passChar = '';
+  for (var i=0; i < passLength; i++) {
+    if (passNum && passLowercase && passSpecial && passUppercase) {
+      passChar += getRandom(numericCharacters);
+      passChar += getRandom(specialCharacters);
+      passChar += getRandom(lowerCasedCharacters);
+      passChar += getRandom(upperCasedCharacters);
+    } else if (!passNum) {
+      passChar -= getRandom(numericCharacters);
+    } else if (!passLowercase) {
+      passChar -= getRandom(lowerCasedCharacters);
+    } else if (!passUppercase) {
+      passChar -= getRandom(upperCasedCharacters);
+    } else if (!passSpecial) {
+      passChar -= getRandom(specialCharacters);
+    } else {
+      alert('Please select an option');
+    }
+
+    
+
+  }
+  
   let password = '';
   for (var i=0; i < passLength; i++) {
-    password += getRandom(numericCharacters, specialCharacters, lowerCasedCharacters, upperCasedCharacters);
+    password += passChar[i];
   }
   
   return password;
 }
 
-
+  
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
 
