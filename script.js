@@ -90,11 +90,7 @@ var upperCasedCharacters = [
 
 
 
-var passLength = prompt('Please select a number between 10 and 64');
-var passNum = confirm('Would you like to include numbers?');
-var passUppercase = confirm('Would you like to include uppercases?');
-var passLowercase = confirm('Would you like to include lowercases?');
-var passSpecial = confirm('Would you like to include special characters?');
+
 
 // Function for getting a random element from an array
 function getRandom(numericCharacters) {
@@ -117,26 +113,33 @@ function getRandom(lowerCasedCharacters) {
 
 // Function to generate password with user input
 function generatePassword() {
+  var passLength = prompt('Please select a number between 10 and 64');
+  if (passLength >= 10 && passLength < 64) {
+    var passNum = confirm('Would you like to include numbers?');
+    var passUppercase = confirm('Would you like to include uppercases?');
+    var passLowercase = confirm('Would you like to include lowercases?');
+    var passSpecial = confirm('Would you like to include special characters?');
+
+  } else {
+    alert('Please select a value between 10 and 64');
+  }
+  
   let passChar = '';
   for (var i=0; i < passLength; i++) {
-    if (passNum && passLowercase && passSpecial && passUppercase) {
+    if (passNum == true){
       passChar += getRandom(numericCharacters);
+    }
+    if (passSpecial == true){
       passChar += getRandom(specialCharacters);
+    }
+    if (passLowercase == true){
       passChar += getRandom(lowerCasedCharacters);
+    }
+    if (passUppercase == true){
       passChar += getRandom(upperCasedCharacters);
-    } else if (!passNum) {
-      passChar -= getRandom(numericCharacters);
-    } else if (!passLowercase) {
-      passChar -= getRandom(lowerCasedCharacters);
-    } else if (!passUppercase) {
-      passChar -= getRandom(upperCasedCharacters);
-    } else if (!passSpecial) {
-      passChar -= getRandom(specialCharacters);
-    } else {
-      alert('Please select an option');
     }
 
-    
+      
 
   }
   
@@ -160,7 +163,7 @@ function writePassword() {
   passwordText.value = password;
   
 }
-writePassword();
+
 
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
